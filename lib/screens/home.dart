@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  /// render
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -55,11 +55,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-/*
-Consumer<MyModel>(
-builder: (context, model, widget) {
-
-  }
-),
- */

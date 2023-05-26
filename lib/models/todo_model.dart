@@ -4,5 +4,6 @@ class ToDoEntry{
   String date = "";
 
   ToDoEntry({required this.task, required this.subtasks, required this.date});
-
 }
+
+// ToDoEntry temp = ToDoEntry(task: 'asdsad', subtasks: 'asdasda', date: 'asdasdas');

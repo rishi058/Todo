@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
-import 'package:flutter/services.dart';
 
-Future main() async {
+void main() async {
   runApp(const ToDoApp());
 }
 
