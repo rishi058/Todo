@@ -2,15 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/models/todo_model.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class AddTaskAlertDialog extends StatefulWidget {
-  final Function refresh;
-  final List<ToDoEntry> data;
-
   const AddTaskAlertDialog({
     Key? key,
-    required this.refresh,
-    required this.data,
   }) : super(key: key);
 
   @override
@@ -23,6 +19,8 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final UserNotesInstance allNotes = Get.find();
+
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return AlertDialog(
@@ -90,8 +88,7 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
           onPressed: () {
             if(task.text.isEmpty && subtasks.text.isEmpty){return;}
             ToDoEntry temp = ToDoEntry(task: task.text, subtasks: subtasks.text, date: DateFormat.yMd().add_jm().format(DateTime.now()));
-            widget.data.add(temp);
-            widget.refresh();
+            allNotes.add(temp);
             _clearAll();
             Navigator.of(context, rootNavigator: true).pop();
           },

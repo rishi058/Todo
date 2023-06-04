@@ -2,15 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/models/todo_model.dart';
+import 'package:get/get.dart';
 
 
 class UpdateTaskAlertDialog extends StatefulWidget {
   final int index;
-  final List<ToDoEntry> data;
-  final Function refresh;
 
   const UpdateTaskAlertDialog(
-      {Key? Key, required this.index, required this.data, required this.refresh})
+      {Key? Key, required this.index})
       : super(key: Key);
 
   @override
@@ -24,8 +23,9 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    taskNameController.text = widget.data[widget.index].task;
-    taskDescController.text = widget.data[widget.index].subtasks;
+    final UserNotesInstance allNotes = Get.find();
+    taskNameController.text = allNotes.myNotes[widget.index].task;
+    taskDescController.text = allNotes.myNotes[widget.index].subtasks;
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -74,7 +74,7 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
                 ),
               ),
               const SizedBox(height: 15),
-              Text(widget.data[widget.index].date),
+              Text(allNotes.myNotes[widget.index].date),
             ],
           ),
         ),
@@ -91,8 +91,7 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
             final taskName = taskNameController.text;
             final taskDesc = taskDescController.text;
             ToDoEntry temp = ToDoEntry(task: taskName, subtasks: taskDesc, date: DateFormat.yMd().add_jm().format(DateTime.now()));
-            widget.data[widget.index] = temp;
-            widget.refresh();
+            allNotes.modify(temp, widget.index);
             Navigator.of(context, rootNavigator: true).pop();
           },
           child: const Text('Update'),

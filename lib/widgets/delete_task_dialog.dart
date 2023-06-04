@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../models/todo_model.dart';
 
 class DeleteTaskDialog extends StatefulWidget {
-  final Function refresh;
-  final List<ToDoEntry> data;
   final int index;
 
-  const DeleteTaskDialog({Key? key, required this.refresh, required this.data, required this.index}) : super(key: key);
+  const DeleteTaskDialog({Key? key, required this.index}) : super(key: key);
 
   @override
   State<DeleteTaskDialog> createState() => _DeleteTaskDialogState();
@@ -16,6 +14,8 @@ class DeleteTaskDialog extends StatefulWidget {
 class _DeleteTaskDialogState extends State<DeleteTaskDialog> {
   @override
   Widget build(BuildContext context) {
+    final UserNotesInstance allNotes = Get.find();
+
     return AlertDialog(
       scrollable: true,
       title: const Text(
@@ -45,8 +45,7 @@ class _DeleteTaskDialogState extends State<DeleteTaskDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            widget.data.removeAt(widget.index);
-            widget.refresh();
+            allNotes.delete(widget.index);
             Navigator.of(context, rootNavigator: true).pop();
           },
           child: const Text('Delete'),

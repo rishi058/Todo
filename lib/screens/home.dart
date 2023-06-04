@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todo/widgets/task_card.dart';
 import '../models/todo_model.dart';
 import '../widgets/add_task_dialog.dart';
+import 'package:get/get.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -14,14 +15,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  List<ToDoEntry> data = [];
-
-  void refresh(){
-    setState(() {});
-  }
-
   @override
-  Widget build(BuildContext context) {  /// render
+  Widget build(BuildContext context) {
+    final UserNotesInstance allNotes = Get.find();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -40,18 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AddTaskAlertDialog(refresh: refresh, data: data);
+              return const AddTaskAlertDialog();
             },
           );
         },
         child: const Icon(Icons.add),
       ),
 
-      body: ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index){
-      return customCard(index, data, refresh);
-      }),
+      body: Obx(() =>
+          ListView.builder(
+              itemCount: allNotes.myNotes.length,
+              itemBuilder: (context, index){
+                return customCard(allNotes.myNotes[index], index);
+              })),
     );
   }
 }

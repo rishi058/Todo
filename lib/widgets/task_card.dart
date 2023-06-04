@@ -4,7 +4,7 @@ import 'package:todo/widgets/update_task_dialog.dart';
 import '../utils/colors.dart';
 import 'delete_task_dialog.dart';
 
-Widget customCard(int index, List<ToDoEntry> data, Function refresh){
+Widget customCard(ToDoEntry data, int index){
   return Container(
     padding: const EdgeInsets.only(bottom: 20),
     margin: const EdgeInsets.all(15),
@@ -28,13 +28,13 @@ Widget customCard(int index, List<ToDoEntry> data, Function refresh){
           backgroundColor: Colors.redAccent,
         ),
       ),
-      title: Text(data[index].task, style: const TextStyle(fontWeight: FontWeight.w500),),
-      subtitle: Text(data[index].subtasks),
+      title: Text(data.task, style: const TextStyle(fontWeight: FontWeight.w500),),
+      subtitle: Text(data.subtasks),
       isThreeLine: true,
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(data[index].date),
+          Text(data.date),
           const SizedBox(height: 20),
           Expanded(
             child: PopupMenuButton(
@@ -53,7 +53,7 @@ Widget customCard(int index, List<ToDoEntry> data, Function refresh){
                         const Duration(seconds: 0),
                             () => showDialog(
                           context: context,
-                          builder: (context) => UpdateTaskAlertDialog(index: index, data: data, refresh: refresh),
+                          builder: (context) => UpdateTaskAlertDialog(index:index),
                         ),
                       );
                     },
@@ -69,7 +69,7 @@ Widget customCard(int index, List<ToDoEntry> data, Function refresh){
                         const Duration(seconds: 0),
                             () => showDialog(
                           context: context,
-                          builder: (context) => DeleteTaskDialog(index: index, data: data, refresh: refresh),
+                          builder: (context) => DeleteTaskDialog(index: index),
                         ),
                       );
                     },
